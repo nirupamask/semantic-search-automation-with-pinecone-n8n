@@ -5,37 +5,37 @@ Semantic Search Automation with n8n & Pinecone
  
 **Description**
  
-Automation workflow in n8n for semantic search.
+-Automation workflow in n8n for semantic search.
  
-Uses OpenAI embeddings to convert text into vectors.
+-Uses OpenAI embeddings to convert text into vectors.
  
-Stores embeddings in Pinecone vector database.
+-Stores embeddings in Pinecone vector database.
  
-Retrieves relevant results based on user queries.
+-Retrieves relevant results based on user queries.
  
-Integrates with external APIs via HTTP requests.
+-Integrates with external APIs via HTTP requests.
  
-Ideal for AI-powered search, chatbots, and knowledge management.
+-Ideal for AI-powered search, chatbots, and knowledge management.
 
 **Workflow Tools / Nodes**
  
-Trigger Node – Starts the workflow on new data or query.
+-Trigger Node – Starts the workflow on new data or query.
  
-Edit Fields Node – Formats input text or query.
+-Edit Fields Node – Formats input text or query.
  
-Create Embedding Node – Generates vector embeddings using OpenAI.
+-Create Embedding Node – Generates vector embeddings using OpenAI.
  
-Store Vector Node – Saves embeddings in Pinecone.
+-Store Vector Node – Saves embeddings in Pinecone.
  
-User Query Node – Accepts semantic search queries.
+-User Query Node – Accepts semantic search queries.
  
-Query Embedding Node – Converts query into a vector embedding.
+-Query Embedding Node – Converts query into a vector embedding.
  
-Pinecone Query HTTP Node – Finds matching vectors in Pinecone.
+-Pinecone Query HTTP Node – Finds matching vectors in Pinecone.
  
-HTTP Request Node – Fetches external data or integrates APIs.
+-HTTP Request Node – Fetches external data or integrates APIs.
  
-Toggle / Conditional Nodes – For branching logic and data manipulation.
+-Toggle / Conditional Nodes – For branching logic and data manipulation.
  
  
  
@@ -43,19 +43,19 @@ Toggle / Conditional Nodes – For branching logic and data manipulation.
  
 **Workflow Steps**
  
-Receive input text or user query.
+-Receive input text or user query.
  
-Format text using Edit Fields Node.
+-Format text using Edit Fields Node.
  
-Create embeddings via OpenAI.
+-Create embeddings via OpenAI.
  
-Store embeddings in Pinecone.
+-Store embeddings in Pinecone.
  
-Convert user query to embedding.
+-Convert user query to embedding.
  
-Search vector database for relevant results.
+-Search vector database for relevant results.
  
-Fetch additional data if needed via HTTP Request Node.
+-Fetch additional data if needed via HTTP Request Node.
  
  
  
@@ -63,13 +63,13 @@ Fetch additional data if needed via HTTP Request Node.
  
 **Tech Stack**
  
-n8n – Automation platform
+-n8n – Automation platform
  
-Pinecone – Vector database
+-Pinecone – Vector database
  
-OpenAI embeddings – Text representation
+-OpenAI embeddings – Text representation
  
-HTTP / REST APIs – Integration with external data
+-HTTP / REST APIs – Integration with external data
  
  
  
@@ -77,33 +77,23 @@ HTTP / REST APIs – Integration with external data
  
 **Setup & Usage**
  
-Clone repo: git clone https://github.com/your-username/semantic-search-automation.git
+-Clone repo: git clone https://github.com/your-username/semantic-search-automation.git
  
-Install n8n and import workflow (n8n_workflow.json).
+-Install n8n and import workflow (n8n_workflow.json).
  
-Configure .env with:
+-Configure .env with:
  
-OPENAI_API_KEY=your_openai_key
-PINECONE_API_KEY=your_pinecone_key
-PINECONE_ENVIRONMENT=your_pinecone_environment
+1.OPENAI_API_KEY=your_openai_key
+2.PINECONE_API_KEY=your_pinecone_key
+3.PINECONE_ENVIRONMENT=your_pinecone_environment
  
-Run workflow and test semantic search queries.
+-Run workflow and test semantic search queries.
  
-Extend workflow with additional nodes as needed.
+-Extend workflow with additional nodes as needed.
  
  
  
----
- 
-**Potential Improvements**
- 
-Add authentication for secure triggers.
- 
-Implement error handling and retries.
- 
-Build a user interface for querying.
- 
-Support multi-language embeddings.
+![workflow](vector-embeddings-storage.png)
  
  
  
