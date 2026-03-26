@@ -1,0 +1,320 @@
+{
+  "name": "vector storage",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "92ff5d86-4db7-476f-8c26-4b5073e32854",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0a7bb44-da05-4ed7-863a-6a731da79018",
+              "name": "text",
+              "value": "vector database is used for semantic search",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "9ef6e3b6-74d5-4477-901c-0d386c38a015",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://demo-index1-14svqqq.svc.aped-4627-b74a.pinecone.io/vectors/upsert",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Api-key",
+              "value": "pcsk_6uXGYK_AWxEDH1BSv6v9sFF9k1hgY4VfgwJn4vzG67sJooxKnPWSe6Ukme4NAykHneu7Ag"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n{\n  vectors: [\n    {\n      id: \"1\",\n      values: $node[\"create embedding\"].json[\"data\"][0][\"embedding\"],\n      metadata: {\n        text: \"A vector database is used to store embeddings and serach similar data efficiently\"\n      }\n    }\n  ]\n}\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        672,
+        0
+      ],
+      "id": "f037cbab-b29b-410e-9247-501efbe075bf",
+      "name": "store vector"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "097b6d90-52f3-4ea3-83b2-31d5a5b4443f",
+              "name": "query",
+              "value": "What is vector database",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        896,
+        0
+      ],
+      "id": "56eeb820-013c-4f12-83e4-988ce15de7e2",
+      "name": "user query"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/embeddings",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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  "
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "text-embedding-3-small"
+            },
+            {
+              "name": "input",
+              "value": "={{ $json[\"text\"] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        448,
+        0
+      ],
+      "id": "e4266ffa-2f97-4f8d-9828-2a75be281496",
+      "name": "create embedding"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/embeddings",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\":\"text-embedding-3-small\",\n  \"input\":\"{{ $json['query']}}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1104,
+        0
+      ],
+      "id": "44f45350-91a4-4fe8-84bf-b8e821729d87",
+      "name": "Query Embedding"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n{\n  model: \"nvidia/nemotron-3-super-120b-a12b:free\",\n  messages: [\n    {\n      role: \"user\",\n      content: \"Context: \" + $node[\"Pinecone Query\"].json[\"matches\"][0][\"metadata\"][\"text\"]\n    }\n  ]\n}\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1520,
+        0
+      ],
+      "id": "bbd0a368-738c-4d77-8ec0-d8d252085ee4",
+      "name": "HTTP Request1",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://demo-index1-14svqqq.svc.aped-4627-b74a.pinecone.io/query",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Api-key",
+              "value": "pcsk_6uXGYK_AWxEDH1BSv6v9sFF9k1hgY4VfgwJn4vzG67sJooxKnPWSe6Ukme4NAykHneu7Ag"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n{\n  vector: $node[\"Query Embedding\"].json[\"data\"][0][\"embedding\"],\n  topK: 3,\n  includeMetadata: true\n}\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1312,
+        0
+      ],
+      "id": "118357e9-4ec8-46ac-b0b2-6f811cc4e47c",
+      "name": "Pinecone Query"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "create embedding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "store vector": {
+      "main": [
+        [
+          {
+            "node": "user query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create embedding": {
+      "main": [
+        [
+          {
+            "node": "store vector",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "user query": {
+      "main": [
+        [
+          {
+            "node": "Query Embedding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query Embedding": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Query": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "9a588ddc-2a6e-4702-8c45-77e38a7c2bdd",
+  "meta": {
+    "instanceId": "ace8433e9893733176e9c30e96b98587389c21d817c723a7a6f502a708ff77fe"
+  },
+  "id": "tUCITyUQD53rwCUD",
+  "tags": []
+}
