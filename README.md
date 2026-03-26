@@ -93,7 +93,7 @@ Semantic Search Automation with n8n & Pinecone
  
  
  
-![workflow]("vector-storage-n8n.png")
+![workflow](vector-storage-n8n.png)
  
  
  
