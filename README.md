@@ -1,92 +1,129 @@
-# semantic-search-automation-with-pinecone-n8n
-n8n workflow for semantic search using OpenAI embeddings and Pinecone vector database. Automates text embedding, storage, and query-based retrieval for intelligent search.
+# rag-semantic-search-pinecone-openrouter
+Built a Retrieval-Augmented Generation (RAG) system using OpenRouter, Pinecone, and vector embeddings to enable semantic search and AI-powered question answering.
 
-Semantic Search Automation with n8n & Pinecone
- 
-**Description**
- 
--Automation workflow in n8n for semantic search.
- 
--Uses OpenAI embeddings to convert text into vectors.
- 
--Stores embeddings in Pinecone vector database.
- 
--Retrieves relevant results based on user queries.
- 
--Integrates with external APIs via HTTP requests.
- 
--Ideal for AI-powered search, chatbots, and knowledge management.
-
-**Workflow Tools / Nodes**
- 
--Trigger Node – Starts the workflow on new data or query.
- 
--Edit Fields Node – Formats input text or query.
- 
--Create Embedding Node – Generates vector embeddings using OpenAI.
- 
--Store Vector Node – Saves embeddings in Pinecone.
- 
--User Query Node – Accepts semantic search queries.
- 
--Query Embedding Node – Converts query into a vector embedding.
- 
--Pinecone Query HTTP Node – Finds matching vectors in Pinecone.
- 
--HTTP Request Node – Fetches external data or integrates APIs.
- 
--Toggle / Conditional Nodes – For branching logic and data manipulation.
+**This project demonstrates real-world implementation of RAG architecture used in modern AI systems like ChatGPT plugins and enterprise search solutions.**
  
  
+**🚀 RAG-Based Semantic Search System**
+ 
+**📌 Overview**
+ 
+This project implements a Retrieval-Augmented Generation (RAG) system that combines vector search with AI generation to provide accurate, context-aware answers.
+ 
+It uses embeddings to store and retrieve semantic meaning from data, enabling intelligent question answering beyond keyword matching.
  
 ---
  
-**Workflow Steps**
+**🧠 Architecture**
  
--Receive input text or user query.
- 
--Format text using Edit Fields Node.
- 
--Create embeddings via OpenAI.
- 
--Store embeddings in Pinecone.
- 
--Convert user query to embedding.
- 
--Search vector database for relevant results.
- 
--Fetch additional data if needed via HTTP Request Node.
- 
- 
+User Query → Embedding → Vector Search → Context Retrieval → AI Response
  
 ---
  
-**Tech Stack**
+**⚙️ Tech Stack**
  
--n8n – Automation platform
- 
--Pinecone – Vector database
- 
--OpenAI embeddings – Text representation
- 
--HTTP / REST APIs – Integration with external data
- 
- 
+- OpenRouter (for embeddings & LLM)
+- Pinecone (vector database)
+- n8n (workflow automation)
+- REST APIs
  
 ---
  
-**Setup & Usage**
--Install n8n and import workflow (n8n_workflow.json).
+**🔄 Workflow Explanation**
  
--Configure .env with:
+1. Data Ingestion
  
-1.OPENAI_API_KEY=your_openai_key
-2.PINECONE_API_KEY=your_pinecone_key
-3.PINECONE_ENVIRONMENT=your_pinecone_environment
+- Input text is provided using Edit Fields node
+- Example:
+  - "Vector database is used for semantic search"
  
--Run workflow and test semantic search queries.
+2. Embedding Creation
  
--Extend workflow with additional nodes as needed.
+- Text is converted into vector embeddings using OpenRouter API
+ 
+3. Vector Storage
+ 
+- Embeddings are stored in Pinecone along with metadata
+ 
+---
+ 
+4. Query Processing
+ 
+- User query is converted into embedding
+- Example:
+  - "What is vector database?"
+ 
+---
+ 
+5. Semantic Retrieval
+ 
+- Pinecone retrieves topK most similar vectors
+- Based on cosine similarity
+ 
+---
+ 
+6. Context Augmentation
+ 
+- Retrieved text is added as context to the prompt
+ 
+---
+ 
+7. Response Generation
+ 
+- OpenRouter LLM generates final answer using context
+ 
+---
+ 
+**🔥 Key Features**
+ 
+- Semantic search using vector embeddings
+- Real-time AI-powered responses
+- Context-aware answering (RAG architecture)
+- Scalable vector storage with Pinecone
+- Modular workflow using n8n
+ 
+---
+ 
+📊 Example
+ 
+Query:
+"What is vector database?"
+ 
+Retrieved Context:
+"Vector database is used for semantic search"
+ 
+Generated Answer:
+"A vector database is a system designed to store and search embeddings..."
+ 
+---
+ 
+🧩 Concepts Used
+ 
+- Embeddings
+- Cosine Similarity
+- Vector Databases
+- Retrieval-Augmented Generation (RAG)
+- Prompt Engineering
+ 
+---
+ 
+🚀 Future Improvements
+ 
+- Add multiple documents for richer context
+- Implement similarity threshold filtering
+- Build frontend chatbot UI
+- Add memory for conversational AI
+ 
+---
+ 
+**👩‍💻 Author
+ 
+Nirupama S**
+ 
+---
+ 
+**⭐ If you like this project, give it a star!**
+ 
  
  
  
