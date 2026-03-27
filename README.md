@@ -76,9 +76,6 @@ Semantic Search Automation with n8n & Pinecone
 ---
  
 **Setup & Usage**
- 
--Clone repo: git clone https://github.com/your-username/semantic-search-automation.git
- 
 -Install n8n and import workflow (n8n_workflow.json).
  
 -Configure .env with:
